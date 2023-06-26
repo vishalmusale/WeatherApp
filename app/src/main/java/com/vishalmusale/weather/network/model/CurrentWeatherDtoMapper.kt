@@ -1,14 +1,8 @@
 package com.vishalmusale.weather.network.model
 
-import android.content.Context
-import androidx.compose.runtime.remember
-import androidx.lifecycle.asLiveData
 import com.vishalmusale.weather.domain.model.CurrentWeather
-import com.vishalmusale.weather.domain.util.EntityMapper
+import com.vishalmusale.weather.domain.util.DomainMapper
 import com.vishalmusale.weather.util.Units
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 
 //data class CurrentWeather(
 //    var cityId : Int,
@@ -33,28 +27,28 @@ import kotlinx.coroutines.flow.first
 //    var desciption : String = "-",
 //    var icon : String
 //)
-class CurrentWeatherNetworkMapper() : EntityMapper<CurrentWeatherEntity, CurrentWeather> {
-    override fun mapFromEntity(entity: CurrentWeatherEntity, unit: Units.UnitSystem): CurrentWeather {
+class CurrentWeatherDtoMapper() : DomainMapper<CurrentWeatherDto, CurrentWeather> {
+    override fun mapToDomainModel(model: CurrentWeatherDto, unit: Units.UnitSystem): CurrentWeather {
 
         return CurrentWeather(
-            cityId = entity.id,
-            name = entity.name,
-            country = entity.sys?.country,
-            lastDateTime = entity.dt,
-            curDateTime = entity.dt,
-            lat = entity.coord?.lat,
-            lon = entity.coord?.lon,
-            temp = getTemp(entity.main?.temp, unit),
-            feels_like = getTemp(entity.main?.feelsLike, unit),
-            temp_max = getTemp(entity.main?.tempMax, unit),
-            temp_min = getTemp(entity.main?.tempMin, unit),
-            humidity = "${entity.main?.humidity}%",
-            pressure = "${entity.main?.pressure} hPa",
-            wind = getSpeed(entity.wind?.speed, unit),
-            cloud = "${entity.clouds?.all}%",
-            main = entity.weather[0].main,
-            desciption = entity.weather[0].description,
-            icon = entity.weather[0].icon   // ToDo
+            cityId = model.id,
+            name = model.name,
+            country = model.sys?.country,
+            lastDateTime = model.dt,
+            curDateTime = model.dt,
+            lat = model.coord?.lat,
+            lon = model.coord?.lon,
+            temp = getTemp(model.main?.temp, unit),
+            feels_like = getTemp(model.main?.feelsLike, unit),
+            temp_max = getTemp(model.main?.tempMax, unit),
+            temp_min = getTemp(model.main?.tempMin, unit),
+            humidity = "${model.main?.humidity}%",
+            pressure = "${model.main?.pressure} hPa",
+            wind = getSpeed(model.wind?.speed, unit),
+            cloud = "${model.clouds?.all}%",
+            main = model.weather[0].main,
+            desciption = model.weather[0].description,
+            icon = model.weather[0].icon   // ToDo
         )
     }
 
@@ -85,7 +79,7 @@ class CurrentWeatherNetworkMapper() : EntityMapper<CurrentWeatherEntity, Current
         return "$pressure "
     }
 
-    override fun mapToEntity(domainModel: CurrentWeather): CurrentWeatherEntity {
+    override fun mapFromDomainModel(domainModel: CurrentWeather): CurrentWeatherDto {
         TODO("Not yet implemented")
     }
 }

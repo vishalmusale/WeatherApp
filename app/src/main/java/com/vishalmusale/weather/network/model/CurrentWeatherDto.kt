@@ -3,7 +3,7 @@ package com.vishalmusale.weather.network.model
 import com.google.gson.annotations.SerializedName
 
 
-data class CurrentWeatherEntity (
+data class CurrentWeatherDto (
 
     @SerializedName("coord"      ) var coord      : Coord?             = Coord(),
     @SerializedName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
