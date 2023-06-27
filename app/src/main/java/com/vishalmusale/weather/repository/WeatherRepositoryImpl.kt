@@ -1,20 +1,20 @@
 package com.vishalmusale.weather.repository
 
-import com.vishalmusale.weather.domain.model.CurrentWeather
+import com.vishalmusale.weather.domain.model.Weather
 import com.vishalmusale.weather.network.OpenWeatherService
-import com.vishalmusale.weather.network.model.CurrentWeatherDtoMapper
+import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import com.vishalmusale.weather.util.Units
 
-class CurrentWeatherRepositoryImpl(
+class WeatherRepositoryImpl(
     private val openWeatherService: OpenWeatherService,
-    private val mapper: CurrentWeatherDtoMapper
-) : CurrentWeatherRepository{
+    private val mapper: WeatherDtoMapper
+) : WeatherRepository{
     override suspend fun getCurrentWeatherLatLon(
         lat: Double,
         lon: Double,
         units: Units.UnitSystem,
         addId: String
-    ): CurrentWeather {
+    ): Weather {
         val result = openWeatherService.getCurrentWeatherLatLon(lat, lon, units.name, addId)
         return mapper.mapToDomainModel(result,units)
     }
@@ -23,7 +23,7 @@ class CurrentWeatherRepositoryImpl(
         city: String,
         units: Units.UnitSystem,
         addId: String
-    ): CurrentWeather {
+    ): Weather {
         val result = openWeatherService.getCurrentWeatherCityName(city, units.name, addId)
         return mapper.mapToDomainModel(result, units)
     }
@@ -32,7 +32,7 @@ class CurrentWeatherRepositoryImpl(
         cityId: Int,
         units: Units.UnitSystem,
         addId: String
-    ): CurrentWeather {
+    ): Weather {
         val result = openWeatherService.getCurrentWeatherCityId(cityId, units.name, addId)
         return mapper.mapToDomainModel(result, units)
     }

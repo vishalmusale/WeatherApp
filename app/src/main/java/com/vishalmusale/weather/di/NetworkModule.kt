@@ -2,14 +2,13 @@ package com.vishalmusale.weather.di
 
 import com.google.gson.GsonBuilder
 import com.vishalmusale.weather.network.OpenWeatherService
-import com.vishalmusale.weather.network.model.CurrentWeatherDtoMapper
+import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -18,8 +17,8 @@ import javax.inject.Singleton
 object NetworkModule {
     @Singleton
     @Provides
-    fun provideWeatherCurrentWeatherMapper() : CurrentWeatherDtoMapper {
-        return CurrentWeatherDtoMapper()
+    fun provideWeatherCurrentWeatherMapper() : WeatherDtoMapper {
+        return WeatherDtoMapper()
     }
 
     @Singleton

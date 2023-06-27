@@ -1,6 +1,7 @@
 package com.vishalmusale.weather.ui.weather
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,11 +19,17 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val result = viewModel.weather.value
+        Log.d(Companion.TAG, "Weather: $result")
         // Inflate the layout for this fragment
         return ComposeView(requireContext()).apply {
             setContent {
                 Text(text = "Weather Fragment")
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "WeatherFragment"
     }
 }

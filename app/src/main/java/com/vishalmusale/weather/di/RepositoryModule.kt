@@ -1,9 +1,9 @@
 package com.vishalmusale.weather.di
 
 import com.vishalmusale.weather.network.OpenWeatherService
-import com.vishalmusale.weather.network.model.CurrentWeatherDtoMapper
-import com.vishalmusale.weather.repository.CurrentWeatherRepository
-import com.vishalmusale.weather.repository.CurrentWeatherRepositoryImpl
+import com.vishalmusale.weather.network.model.WeatherDtoMapper
+import com.vishalmusale.weather.repository.WeatherRepository
+import com.vishalmusale.weather.repository.WeatherRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +15,10 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideCurrentWeatherRepository(
+    fun provideWeatherRepository(
         openWeatherService: OpenWeatherService,
-        currentWeatherDtoMapper: CurrentWeatherDtoMapper
-    ) : CurrentWeatherRepository {
-        return CurrentWeatherRepositoryImpl(openWeatherService, currentWeatherDtoMapper)
+        weatherDtoMapper: WeatherDtoMapper
+    ) : WeatherRepository {
+        return WeatherRepositoryImpl(openWeatherService, weatherDtoMapper)
     }
 }

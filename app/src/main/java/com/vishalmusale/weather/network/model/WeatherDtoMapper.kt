@@ -1,13 +1,13 @@
 package com.vishalmusale.weather.network.model
 
-import com.vishalmusale.weather.domain.model.CurrentWeather
+import com.vishalmusale.weather.domain.model.Weather
 import com.vishalmusale.weather.domain.util.DomainMapper
 import com.vishalmusale.weather.util.Units
 
-class CurrentWeatherDtoMapper() : DomainMapper<CurrentWeatherDto, CurrentWeather> {
-    override fun mapToDomainModel(model: CurrentWeatherDto, unit: Units.UnitSystem): CurrentWeather {
+class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
+    override fun mapToDomainModel(model: WeatherDto, unit: Units.UnitSystem): Weather {
 
-        return CurrentWeather(
+        return Weather(
             cityId = model.id,
             name = model.name,
             country = model.sys?.country,
@@ -23,9 +23,9 @@ class CurrentWeatherDtoMapper() : DomainMapper<CurrentWeatherDto, CurrentWeather
             pressure = "${model.main?.pressure} hPa",
             wind = getSpeed(model.wind?.speed, unit),
             cloud = "${model.clouds?.all}%",
-            main = model.weather[0].main,
-            desciption = model.weather[0].description,
-            icon = model.weather[0].icon   // ToDo
+            main = model.weatherDescription[0].main,
+            desciption = model.weatherDescription[0].description,
+            icon = model.weatherDescription[0].icon   // ToDo
         )
     }
 
@@ -56,7 +56,7 @@ class CurrentWeatherDtoMapper() : DomainMapper<CurrentWeatherDto, CurrentWeather
         return "$pressure "
     }
 
-    override fun mapFromDomainModel(domainModel: CurrentWeather): CurrentWeatherDto {
+    override fun mapFromDomainModel(domainModel: Weather): WeatherDto {
         TODO("Not yet implemented")
     }
 }

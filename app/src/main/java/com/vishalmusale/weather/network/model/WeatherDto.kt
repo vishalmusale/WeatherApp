@@ -3,10 +3,10 @@ package com.vishalmusale.weather.network.model
 import com.google.gson.annotations.SerializedName
 
 
-data class CurrentWeatherDto (
+data class WeatherDto (
 
     @SerializedName("coord"      ) var coord      : Coord?             = Coord(),
-    @SerializedName("weather"    ) var weather    : ArrayList<Weather> = arrayListOf(),
+    @SerializedName("weather"    ) var weatherDescription    : ArrayList<WeatherDescription> = arrayListOf(),
     @SerializedName("base"       ) var base       : String?            = null,
     @SerializedName("main"       ) var main       : Main?              = Main(),
     @SerializedName("visibility" ) var visibility : Int?               = null,

@@ -3,7 +3,7 @@ package com.vishalmusale.weather.network.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Weather (
+data class WeatherDescription (
 
     @SerializedName("id"          ) var id          : Int?    = null,
     @SerializedName("main"        ) var main        : String? = null,
