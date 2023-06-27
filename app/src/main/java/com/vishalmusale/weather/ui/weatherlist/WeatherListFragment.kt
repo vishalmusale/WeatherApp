@@ -21,11 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class WeatherListFragment : Fragment() {
     private val viewModel: WeatherListViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        println("WeatherListFragment $viewModel")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
