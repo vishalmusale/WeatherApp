@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -116,15 +117,11 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-rxjava2:$room_version")
 
-    // -- Dagger
-    def dagger_version = "2.40"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
-    // -- Dagger Android
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    // -- Hilt
+    def hilt_version = "2.44"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     // -- Jetpack Navigation
     def nav_version = "2.6.0"
@@ -139,4 +136,9 @@ dependencies {
     // -- Recyclerview
     def recyclerview_version = "1.3.0"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

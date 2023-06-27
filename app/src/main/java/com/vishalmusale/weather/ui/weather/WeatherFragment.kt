@@ -1,4 +1,4 @@
-package com.vishalmusale.weather
+package com.vishalmusale.weather.ui.weather
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
     override fun onCreateView(
