@@ -3,6 +3,9 @@ package com.vishalmusale.weather.network.model
 import com.vishalmusale.weather.domain.model.Weather
 import com.vishalmusale.weather.domain.util.DomainMapper
 import com.vishalmusale.weather.util.Units
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
     override fun mapToDomainModel(model: WeatherDto, unit: Units.UnitSystem): Weather {
@@ -13,6 +16,7 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
             country = model.sys?.country,
             lastDateTime = model.dt,
             curDateTime = model.dt,
+            display_time = getDisplayTime(model.dt, model.timezone),
             lat = model.coord?.lat,
             lon = model.coord?.lon,
             temp = getTemp(model.main?.temp, unit),
@@ -25,8 +29,21 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
             cloud = "${model.clouds?.all}%",
             main = model.weatherDescription[0].main,
             desciption = model.weatherDescription[0].description,
-            icon = model.weatherDescription[0].icon   // ToDo
+            icon = getIconUrl(model.weatherDescription[0].icon)
         )
+    }
+
+    private fun getIconUrl(icon: String?): String? {
+        if(icon == null)
+            return "-";
+        return "https://openweathermap.org/img/wn/$icon@2x.png"
+    }
+
+    private fun getDisplayTime(timestamp: Long?, timezone: Int?): String? {
+        if(timestamp == null || timezone == null)
+            return "-"
+        val localDateTime = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.ofHours(timezone / 3600))
+        return localDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"))
     }
 
     private fun getTemp(temp : Double?, unit: Units.UnitSystem) : String {
@@ -48,12 +65,6 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
         } else {
             "$speed meter/sec"
         }
-    }
-
-    private fun getPressure(pressure: Double?, unit: Units.UnitSystem) : String {
-        if(pressure == null)
-            return "-"
-        return "$pressure "
     }
 
     override fun mapFromDomainModel(domainModel: Weather): WeatherDto {

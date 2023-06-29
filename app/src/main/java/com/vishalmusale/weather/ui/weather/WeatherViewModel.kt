@@ -25,7 +25,7 @@ class WeatherViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val result = repository.getCurrentWeatherCityId(
-                3163858, Units.UnitSystem.METRIC, appId
+                5391959, Units.UnitSystem.METRIC, appId
             )
             Log.d(TAG, "ViewModel: $result")
             weather.value = result
