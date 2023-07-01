@@ -14,13 +14,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
+    private var lat: Double = -1.0
+    private var lon: Double = -1.0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getDouble("lat") ?.let { lat -> this.lat = lat }
+        arguments?.getDouble("lon") ?.let { lon -> this.lon = lon }
+    }
+
     private val viewModel: WeatherViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val result = viewModel.weather.value
-        Log.d(Companion.TAG, "Weather: $result")
+
+        Log.d(Companion.TAG, "lat: $lat & lon:$lon")
         // Inflate the layout for this fragment
         return ComposeView(requireContext()).apply {
             setContent {

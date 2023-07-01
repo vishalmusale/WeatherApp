@@ -1,6 +1,7 @@
 package com.vishalmusale.weather.di
 
 import com.vishalmusale.weather.network.OpenWeatherService
+import com.vishalmusale.weather.network.model.SearchCityDtoMapper
 import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import com.vishalmusale.weather.repository.WeatherRepository
 import com.vishalmusale.weather.repository.WeatherRepositoryImpl
@@ -17,8 +18,9 @@ class RepositoryModule {
     @Provides
     fun provideWeatherRepository(
         openWeatherService: OpenWeatherService,
-        weatherDtoMapper: WeatherDtoMapper
+        weatherDtoMapper: WeatherDtoMapper,
+        searchCityMapper: SearchCityDtoMapper
     ) : WeatherRepository {
-        return WeatherRepositoryImpl(openWeatherService, weatherDtoMapper)
+        return WeatherRepositoryImpl(openWeatherService, weatherDtoMapper, searchCityMapper)
     }
 }

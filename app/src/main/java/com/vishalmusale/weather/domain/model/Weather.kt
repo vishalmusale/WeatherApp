@@ -9,6 +9,7 @@ data class Weather(
     var name : String? = null,
     var country : String? = null,
     var state: String? = null,
+    var cityDisplayName: String? = null,
     var lastDateTime : Long? = null,
     var curDateTime : Long? = null,
     var display_time : String? = "-",   // ToDO
@@ -29,12 +30,4 @@ data class Weather(
     var icon : String? = null
 
 
-) : Parcelable {
-//    constructor(
-//        name : String,
-//        state: String?,
-//        country : String,
-//        lat : Double,
-//        lon : Double,
-//    ) : this(name = name, state = state, country = country, lat = lat, lon = lon)
-}
+) : Parcelable

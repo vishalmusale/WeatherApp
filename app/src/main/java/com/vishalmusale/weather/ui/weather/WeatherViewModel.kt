@@ -18,7 +18,8 @@ import javax.inject.Named
 class WeatherViewModel @Inject constructor(
     private val randomString : String,
     private val repository: WeatherRepository,
-    @Named("API_Key") private val appId: String
+    @Named("API_Key") private val appId: String,
+    @Named("SearchCity_Result_Limit") val searchCityResultLimit: Int
 ) : ViewModel() {
     val weather : MutableState<Weather> = mutableStateOf(Weather())
 

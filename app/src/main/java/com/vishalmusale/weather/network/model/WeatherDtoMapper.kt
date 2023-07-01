@@ -70,4 +70,8 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
     override fun mapFromDomainModel(domainModel: Weather): WeatherDto {
         TODO("Not yet implemented")
     }
+
+    override fun mapToDomainModel(model: WeatherDto): Weather {
+        TODO("Not yet implemented")
+    }
 }

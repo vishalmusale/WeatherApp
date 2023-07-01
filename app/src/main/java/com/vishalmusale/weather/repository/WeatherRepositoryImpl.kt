@@ -1,13 +1,17 @@
 package com.vishalmusale.weather.repository
 
+import android.util.Log
 import com.vishalmusale.weather.domain.model.Weather
 import com.vishalmusale.weather.network.OpenWeatherService
+import com.vishalmusale.weather.network.model.SearchCityDtoMapper
 import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import com.vishalmusale.weather.util.Units
+import retrofit2.http.Query
 
 class WeatherRepositoryImpl(
     private val openWeatherService: OpenWeatherService,
-    private val mapper: WeatherDtoMapper
+    private val mapper: WeatherDtoMapper,
+    private val searchCityMapper: SearchCityDtoMapper
 ) : WeatherRepository{
     override suspend fun getCurrentWeatherLatLon(
         lat: Double,
@@ -35,5 +39,20 @@ class WeatherRepositoryImpl(
     ): Weather {
         val result = openWeatherService.getCurrentWeatherCityId(cityId, units.name, addId)
         return mapper.mapToDomainModel(result, units)
+    }
+
+    override suspend fun searchCity(
+        query: String,
+        limit: Int,
+        appId: String
+    ): List<Weather> {
+        Log.d(TAG, "searchCity: limit=$limit, appId:$appId")
+        val result = openWeatherService.searchCity(query, limit, appId)
+        Log.d(Companion.TAG, "searchCity: $result")
+        return searchCityMapper.mapToDomainModelList(result)
+    }
+
+    companion object {
+        private const val TAG = "WeatherRepositoryImpl"
     }
 }

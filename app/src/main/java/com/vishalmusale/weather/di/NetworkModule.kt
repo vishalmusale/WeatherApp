@@ -2,6 +2,8 @@ package com.vishalmusale.weather.di
 
 import com.google.gson.GsonBuilder
 import com.vishalmusale.weather.network.OpenWeatherService
+import com.vishalmusale.weather.network.model.SearchCityDto
+import com.vishalmusale.weather.network.model.SearchCityDtoMapper
 import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import dagger.Module
 import dagger.Provides
@@ -23,6 +25,12 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideSearchCityMapper() : SearchCityDtoMapper {
+        return SearchCityDtoMapper()
+    }
+
+    @Singleton
+    @Provides
     fun provideOpenWeatherService() : OpenWeatherService {
         return Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/")
@@ -36,5 +44,12 @@ object NetworkModule {
     @Named("API_Key")
     fun provideAPIKey() : String {
         return "5b315543d6148f7070c313eb2b9506de"
+    }
+
+    @Singleton
+    @Provides
+    @Named("SearchCity_Result_Limit")
+    fun provideLimit() : Int {
+        return 5
     }
 }
