@@ -2,6 +2,7 @@ package com.vishalmusale.weather.di
 
 import android.content.Context
 import com.vishalmusale.weather.ui.BaseApplication
+import com.vishalmusale.weather.util.Units
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +24,9 @@ object AppModule {
     fun provideRandomString() : String {
         return "Testing Hilt"
     }
+
+    @Singleton
+    @Provides
+    fun provideDataStoreRepository(@ApplicationContext context: Context)=
+        Units.UnitPreferences(context)
 }

@@ -29,12 +29,18 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.vishalmusale.weather.R
+import com.vishalmusale.weather.ui.WeatherActivity
 import com.vishalmusale.weather.ui.components.searchCity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherListFragment : Fragment() {
     private val viewModel: WeatherListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeUnitChange()
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
@@ -64,6 +70,12 @@ class WeatherListFragment : Fragment() {
                 }
 
             }
+        }
+    }
+
+    private fun observeUnitChange() {
+        viewModel.currentUnit.observe(this) { currentUnit ->
+            Log.d(TAG, "observeUnitChange: ${currentUnit.name}")
         }
     }
 
