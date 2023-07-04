@@ -59,7 +59,7 @@ fun CurrentWeatherSection(currentWeather: Weather) {
 
             Button(
                 onClick = { /*TODO Add to the weather list*/ }) {
-                Text(text = "Save")
+                Text(text = "Add")
             }
         }
         Row (

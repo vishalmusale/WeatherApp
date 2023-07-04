@@ -47,14 +47,14 @@ class WeatherListFragment : Fragment() {
                     )
 
 
-                    Spacer(Modifier.padding(10.dp))
-                    Text(text = "Weather List Fragment")
-                    Spacer(Modifier.padding(10.dp))
-                    Button(onClick = {
-                        findNavController().navigate(R.id.action_weatherListFragment_to_weatherFragment)
-                    }) {
-                        Text(text = "Go to Weather")
-                    }
+//                    Spacer(Modifier.padding(10.dp))
+//                    Text(text = "Weather List Fragment")
+//                    Spacer(Modifier.padding(10.dp))
+//                    Button(onClick = {
+//                        findNavController().navigate(R.id.action_weatherListFragment_to_weatherFragment)
+//                    }) {
+//                        Text(text = "Go to Weather")
+//                    }
                 }
 
             }
