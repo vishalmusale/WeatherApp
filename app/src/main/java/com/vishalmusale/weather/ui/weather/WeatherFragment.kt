@@ -2,46 +2,54 @@ package com.vishalmusale.weather.ui.weather
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.vishalmusale.weather.ui.weatherlist.WeatherListFragment
-import com.vishalmusale.weather.ui.weatherlist.WeatherListViewModel
+import com.vishalmusale.weather.ui.components.CurrentWeatherSection
+import com.vishalmusale.weather.ui.components.DetailsSection
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
     private val viewModel: WeatherViewModel by viewModels()
-    private var lat: Double = -1.0
-    private var lon: Double = -1.0
+    private var lat: Double? = null
+    private var lon: Double? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getDouble("lat") ?.let { lat -> this.lat = lat }
-        arguments?.getDouble("lon") ?.let { lon -> this.lon = lon }
+        lat = arguments?.getDouble("lat")
+        lon = arguments?.getDouble("lon")
+
         observeUnitChange()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val result = viewModel.weather.value
-
-        Log.d(Companion.TAG, "lat: $lat & lon:$lon")
         // Inflate the layout for this fragment
         return ComposeView(requireContext()).apply {
             setContent {
-                Text(text = "Weather Fragment")
+                val result = viewModel.weather.value
+                val unit = viewModel.currentUnit.value
+                CurrentWeatherSection(result)
+                DetailsSection(currentWeather = result)
+
+                if(lat != null && lon != null) {
+                    viewModel.updateWeather(lat!!, lon!!, unit!!)
+                }
             }
         }
     }
 
     private fun observeUnitChange() {
         viewModel.currentUnit.observe(this) { currentUnit ->
-            Log.d(TAG, "observeUnitChange: ${currentUnit.name}")
+            Log.d(TAG, "observeUnitChange: weather changed to $currentUnit")
+            if(lat != null && lon != null) {
+                viewModel.updateWeather(lat!!, lon!!, currentUnit)
+            }
         }
     }
 

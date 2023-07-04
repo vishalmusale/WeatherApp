@@ -2,14 +2,12 @@ package com.vishalmusale.weather.ui.weather
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vishalmusale.weather.domain.model.Weather
-import com.vishalmusale.weather.network.model.WeatherDescription
 import com.vishalmusale.weather.repository.WeatherRepository
 import com.vishalmusale.weather.util.Units
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,6 +32,15 @@ class WeatherViewModel @Inject constructor(
             unitPref.getCurrentUnit().collect {
                 _currentUnit.value = it
             }
+        }
+    }
+
+    fun updateWeather(lat: Double, lon: Double, unit: Units.UnitSystem) {
+        Log.d(TAG, "updateWeather: lat: $lat, lon: $lon")
+        viewModelScope.launch {
+            val result = repository.getCurrentWeatherLatLon(lat, lon, currentUnit.value!!, appId)
+            weather.value = result
+            Log.d(TAG, "updateWeather: $result")
         }
     }
 

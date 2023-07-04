@@ -1,6 +1,5 @@
 package com.vishalmusale.weather.ui.components
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
@@ -11,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.vishalmusale.weather.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import com.bumptech.glide.request.transition.Transition
 
 val DEFAULT_WEATHER_IMAGE = R.drawable.wn03d
 

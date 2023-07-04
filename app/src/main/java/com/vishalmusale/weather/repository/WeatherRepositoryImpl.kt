@@ -6,7 +6,6 @@ import com.vishalmusale.weather.network.OpenWeatherService
 import com.vishalmusale.weather.network.model.SearchCityDtoMapper
 import com.vishalmusale.weather.network.model.WeatherDtoMapper
 import com.vishalmusale.weather.util.Units
-import retrofit2.http.Query
 
 class WeatherRepositoryImpl(
     private val openWeatherService: OpenWeatherService,

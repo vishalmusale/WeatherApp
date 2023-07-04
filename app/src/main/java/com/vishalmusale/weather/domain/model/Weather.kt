@@ -9,7 +9,7 @@ data class Weather(
     var name : String? = null,
     var country : String? = null,
     var state: String? = null,
-    var cityDisplayName: String? = null,
+    var cityDisplayName: String? = "-",
     var lastDateTime : Long? = null,
     var curDateTime : Long? = null,
     var display_time : String? = "-",   // ToDO

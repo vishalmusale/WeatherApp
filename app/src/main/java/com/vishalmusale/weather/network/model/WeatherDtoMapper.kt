@@ -6,6 +6,7 @@ import com.vishalmusale.weather.util.Units
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
     override fun mapToDomainModel(model: WeatherDto, unit: Units.UnitSystem): Weather {
@@ -13,6 +14,7 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
         return Weather(
             cityId = model.id,
             name = model.name,
+            cityDisplayName = model.name,
             country = model.sys?.country,
             lastDateTime = model.dt,
             curDateTime = model.dt,
@@ -25,6 +27,7 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
             temp_min = getTemp(model.main?.tempMin, unit),
             humidity = "${model.main?.humidity}%",
             pressure = "${model.main?.pressure} hPa",
+            visibility = model.visibility?.let { convertDistance(it, unit) },
             wind = getSpeed(model.wind?.speed, unit),
             cloud = "${model.clouds?.all}%",
             main = model.weatherDescription[0].main,
@@ -35,7 +38,7 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
 
     private fun getIconUrl(icon: String?): String? {
         if(icon == null)
-            return "-";
+            return null;
         return "https://openweathermap.org/img/wn/$icon@2x.png"
     }
 
@@ -51,9 +54,9 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
             return "-"
         val degree = '\u00B0'
         return if(unit == Units.UnitSystem.IMPERIAL) {
-            "$temp$degree C"
-        } else {
             "$temp$degree F"
+        } else {
+            "$temp$degree C"
         }
     }
 
@@ -65,6 +68,20 @@ class WeatherDtoMapper() : DomainMapper<WeatherDto, Weather> {
         } else {
             "$speed meter/sec"
         }
+    }
+
+    private fun convertDistance(visibility: Int, unit: Units.UnitSystem) : String{
+        return if(unit == Units.UnitSystem.METRIC) {
+            if(visibility > 1000) "${getTwoDecimals((visibility / 1000.0))} km"
+            else "$visibility meters"
+        } else {
+            if(visibility > 1609) "${getTwoDecimals(visibility * 0.000621371)} miles"
+            else "${visibility * 3.281} ft"
+        }
+    }
+
+    private fun getTwoDecimals(num: Double) : Double {
+        return (num * 100.0).roundToInt() / 100.0
     }
 
     override fun mapFromDomainModel(domainModel: Weather): WeatherDto {
